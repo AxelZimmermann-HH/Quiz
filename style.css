@@ -4,10 +4,10 @@ body {
 
 .container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     min-height: 100vh;
-    
 }
 
 .navbar {
@@ -26,7 +26,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
+}
+
+.logo {
+    height: 200px;
 }
 
 h1 {
@@ -68,7 +73,7 @@ h5 {
       opacity: 0.6;
     }
     50% {
-      transform: scale(1.2);
+      transform: scale(1.1);
       opacity: 1;
     }
     100% {
@@ -88,10 +93,35 @@ h5 {
     overflow: hidden;
 }
 
-.progress-bar-fill {
+#progress-bar-fill {
     background-color: #878787;
     height: 100%;
     width: 0%;
-    transition: width 0.4s;
+    transition: width 2s ease;
     border-radius: 5px 0 0 5px;
+}
+
+@media(max-width: 1200px) {
+    h1 {
+        font-size: 25px !important;
+        margin-block-start: 0;
+        margin-block-end: 0;
+    }
+
+    .card {
+        height: 70vh !important;
+    }
+
+    .card-img {
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-title {
+        padding:0;
+    }
+
+    .btn {
+        height: 70px;
+    }
 }

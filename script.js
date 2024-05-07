@@ -68,6 +68,11 @@ function renderQuestion() {
     updateProgressBar(progressPercent);
 }
 
+function updateProgressBar(progressPercent) {
+    let progressBarFill = document.getElementById('progress-bar-fill');
+    progressBarFill.style.width = progressPercent + '%';
+}
+
 function answer(selection, id) {
     let question = questions[currentQuestion];
     let selectedQuestionNumber = selection.slice(-1);
@@ -93,10 +98,6 @@ function answer(selection, id) {
 
 function playAgain() {
     currentQuestion = 0;
+    correctAnswerCount = 0;
     renderQuestion();
-}
-
-function updateProgressBar(progressPercent) {
-    const progressBarFill = document.getElementById('progress-bar-fill');
-    progressBarFill.style.width = progressPercent + '%';
 }
