@@ -33,8 +33,8 @@ function renderQuestion() {
     let question = questions[currentQuestion];
     let allQuestions = questions.length;
     let showQuestionNumber = currentQuestion + 1;
-    
-    
+    const progressPercent = ((currentQuestion) / questions.length) * 100;
+
     let content = document.getElementById('card-content');
     
     
@@ -50,8 +50,8 @@ function renderQuestion() {
         <button id="id4" type="button" onclick="answer('answer4', 'id4')" class="btn btn-primary btn-lg">${question['answer4']}</button>
         </div>
         <div class="progress-bar">
-        <div class="progress-bar-fill" id="progress-bar-fill"></div>
-    </div>
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
     `
     } else {
         content.innerHTML = ``;
@@ -60,14 +60,18 @@ function renderQuestion() {
         <h1 class="card-title">Quiz beendet!</h1>
         <h2>Du hast ${correctAnswerCount} von ${allQuestions} Fragen richtig beantwortet.</h2>
         <button id="" type="button" onclick="playAgain()" class="btn btn-primary btn-lg">Nochmal spielen</button>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
     `
     }
+    updateProgressBar(progressPercent);
 }
 
 function answer(selection, id) {
     let question = questions[currentQuestion];
     let selectedQuestionNumber = selection.slice(-1);
-    const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+    
 
     let idOfRightAnswer = `id${question['right_answer']}`;
 
@@ -83,8 +87,8 @@ function answer(selection, id) {
 
     }
     currentQuestion++;
-    updateProgressBar(progressPercent);
     setTimeout(renderQuestion, 2000);
+    
 }
 
 function playAgain() {
