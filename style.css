@@ -26,11 +26,19 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    gap: 10px;
 }
 
-h2 {
+h1 {
     text-align: center;
+}
+
+h5 {
+    color: rgb(122, 122, 122) !important;
+}
+
+.card-title {
+    padding: 50px;
 }
 
 .button-area {
@@ -38,11 +46,51 @@ h2 {
     justify-content: space-between;
     flex-wrap: wrap;
     width: 95%;
-    column-gap: 10px;
-    row-gap: 10px
+    column-gap: 20px;
+    row-gap: 20px;
     
 }
 
 .btn {
     width: 47%;
+    height: 100px;
+    background-color: rgb(122, 122, 122) !important;
+    border: none !important;
+}
+
+.pulse {
+    animation: pulse 2s ease-out;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+  }
+
+  .progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    height: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    background-color: #4caf50;
+    height: 100%;
+    width: 0%;
+    transition: width 0.4s;
+    border-radius: 5px 0 0 5px;
 }

@@ -26,33 +26,73 @@ let questions = [
 ]
 
 let currentQuestion = 0;
+let correctAnswerCount = 0;
+
 
 function renderQuestion() {
     let question = questions[currentQuestion];
+    let allQuestions = questions.length;
+    let showQuestionNumber = currentQuestion + 1;
+    
     
     let content = document.getElementById('card-content');
+    
+    
+    if (currentQuestion < questions.length) {
     content.innerHTML = ``;
     content.innerHTML += `
-        <h2 class="card-title">${question['question']}</h2>
+        <h5>Frage ${showQuestionNumber} von ${allQuestions}</h5>
+        <h1 class="card-title">${question['question']}</h1>
         <div class="button-area">
         <button id="id1" type="button" onclick="answer('answer1', 'id1')" class="btn btn-primary btn-lg">${question['answer1']}</button>
         <button id="id2" type="button" onclick="answer('answer2', 'id2')" class="btn btn-primary btn-lg">${question['answer2']}</button>
         <button id="id3" type="button" onclick="answer('answer3', 'id3')" class="btn btn-primary btn-lg">${question['answer3']}</button>
         <button id="id4" type="button" onclick="answer('answer4', 'id4')" class="btn btn-primary btn-lg">${question['answer4']}</button>
-
         </div>
+        <div class="progress-bar">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+    </div>
     `
+    } else {
+        content.innerHTML = ``;
+        content.innerHTML += `
+        <h5>Herzlichen Glückwunsch!</h5>
+        <h1 class="card-title">Quiz beendet!</h1>
+        <h2>Du hast ${correctAnswerCount} von ${allQuestions} Fragen richtig beantwortet.</h2>
+        <button id="" type="button" onclick="playAgain()" class="btn btn-primary btn-lg">Nochmal spielen</button>
+    `
+    }
 }
 
 function answer(selection, id) {
     let question = questions[currentQuestion];
     let selectedQuestionNumber = selection.slice(-1);
+    const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+
+    let idOfRightAnswer = `id${question['right_answer']}`;
 
     if (selectedQuestionNumber == question['right_answer']) {
-        document.getElementById(id).classList.add('bg-success');        
+        document.getElementById(id).classList.add('bg-success'); 
+        document.getElementById(id).classList.add('pulse');
+        correctAnswerCount++;       
     } else {
         document.getElementById(id).classList.add('bg-danger');
+        document.getElementById(id).classList.add('pulse');
+        document.getElementById(idOfRightAnswer).classList.add('bg-success');
+        document.getElementById(idOfRightAnswer).classList.add('pulse');
+
     }
     currentQuestion++;
+    updateProgressBar(progressPercent);
     setTimeout(renderQuestion, 2000);
+}
+
+function playAgain() {
+    currentQuestion = 0;
+    renderQuestion();
+}
+
+function updateProgressBar(progressPercent) {
+    const progressBarFill = document.getElementById('progress-bar-fill');
+    progressBarFill.style.width = progressPercent + '%';
 }
