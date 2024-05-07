@@ -27,7 +27,7 @@ let questions = [
 
 let currentQuestion = 0;
 
-function renderQuestion1() {
+function renderQuestion() {
     let question = questions[currentQuestion];
     
     let content = document.getElementById('card-content');
@@ -35,24 +35,24 @@ function renderQuestion1() {
     content.innerHTML += `
         <h2 class="card-title">${question['question']}</h2>
         <div class="button-area">
-        <button id="answer1" type="button" onclick="answer('answer1')" class="btn btn-primary btn-lg">${question['answer1']}</button>
-        <button id="answer2" type="button" onclick="answer('answer2')" class="btn btn-primary btn-lg">${question['answer2']}</button>
-        <button id="answer3" type="button" onclick="answer('answer3')" class="btn btn-primary btn-lg">${question['answer3']}</button>
-        <button id="answer4" type="button" onclick="answer('answer4')" class="btn btn-primary btn-lg">${question['answer4']}</button>
+        <button id="id1" type="button" onclick="answer('answer1', 'id1')" class="btn btn-primary btn-lg">${question['answer1']}</button>
+        <button id="id2" type="button" onclick="answer('answer2', 'id2')" class="btn btn-primary btn-lg">${question['answer2']}</button>
+        <button id="id3" type="button" onclick="answer('answer3', 'id3')" class="btn btn-primary btn-lg">${question['answer3']}</button>
+        <button id="id4" type="button" onclick="answer('answer4', 'id4')" class="btn btn-primary btn-lg">${question['answer4']}</button>
 
         </div>
     `
 }
 
-function answer(selection) {
+function answer(selection, id) {
     let question = questions[currentQuestion];
     let selectedQuestionNumber = selection.slice(-1);
 
     if (selectedQuestionNumber == question['right_answer']) {
-        document.getElementById(selection).classList.add('bg-success');        
+        document.getElementById(id).classList.add('bg-success');        
     } else {
-        document.getElementById(selection).classList.add('bg-danger');
+        document.getElementById(id).classList.add('bg-danger');
     }
     currentQuestion++;
-    setTimeout(renderQuestion1, 2000);
+    setTimeout(renderQuestion, 2000);
 }
