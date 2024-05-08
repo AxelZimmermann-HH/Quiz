@@ -10,16 +10,16 @@ body {
     min-height: 100vh;
 }
 
-.navbar {
-    height: 70px;
-    position: fixed !important;
-    top: 0;
-    right: 0;
-    left: 0;
+.card {
+    
+    margin-bottom: 100px;
+    margin-top: 20px;
 }
 
 .card-img {
-    filter: brightness(30%)
+    filter: brightness(30%);
+    height: 100%;
+    object-fit: cover;
 }
 
 .card-img-overlay {
@@ -31,10 +31,10 @@ body {
 }
 
 .logo {
-    height: 200px;
+    height: 100px;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
 }
 
@@ -63,28 +63,30 @@ h5 {
     border: none !important;
 }
 
-
+.btn:not(:focus):hover {
+    background-color: rgb(163, 163, 163) !important;
+}
 
 .pulse {
     animation: pulse 2s ease-out;
-  }
+}
   
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.6;
-    }
-    50% {
-      transform: scale(1.1);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 0.6;
-    }
-  }
+@keyframes pulse {
+0% {
+    transform: scale(1);
+    opacity: 0.6;
+}
+50% {
+    transform: scale(1.1);
+    opacity: 1;
+}
+100% {
+    transform: scale(1);
+    opacity: 0.6;
+}
+}
 
-  .progress-bar2 {
+.progress-bar2 {
     width: 100%;
     background-color: #f3f3f3;
     border: 1px solid #ccc;
@@ -105,11 +107,16 @@ h5 {
 
 .progress {
     width: 100%;
+    height: 25px !important;
+}
+
+.progress-bar {
+    background-color: rgb(255, 111, 0) !important;
 }
 
 @media(max-width: 1200px) {
     h1 {
-        font-size: 25px !important;
+        
         margin-block-start: 0;
         margin-block-end: 0;
     }
@@ -118,16 +125,26 @@ h5 {
         height: 70vh !important;
     }
 
-    .card-img {
-        height: 100%;
-        object-fit: cover;
-    }
-
     .card-title {
         padding:0;
     }
 
     .btn {
         height: 70px;
+    }
+}
+
+@media(max-width: 500px) {
+    .logo {
+        height: 80px;
+    }
+    .card {
+        height: 85vh !important;
+    }
+    .button-area {
+        justify-content: center;
+    }
+    .btn {
+        width: 80%;
     }
 }
