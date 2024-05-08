@@ -22,25 +22,49 @@ let questions = [
         answer3: "1.010.000",
         answer4: "1.000.100",
         right_answer: 2
+    },
+    {
+        question: "Wie viele Beine haben drei blaue, fünf grüne und acht gelbe Chamäleons, wenn zwei der gelben nur drei Beine und drei der grünen nur zwei Beine haben?",
+        answer1: "66",
+        answer2:"69",
+        answer3: "70",
+        answer4: "68",
+        right_answer: 4
     }
 ]
 
+
 let currentQuestion = 0;
 let correctAnswerCount = 0;
+let AUDIO_SUCCESS = new Audio('/sounds/correct.wav');
+let AUDIO_FAIL = new Audio('/sounds/false.wav');
 
 
 function renderQuestion() {
     let question = questions[currentQuestion];
     let allQuestions = questions.length;
     let showQuestionNumber = currentQuestion + 1;
-    const progressPercent = ((currentQuestion) / questions.length) * 100;
-
+    const progressPercent = Math.round(((currentQuestion) / questions.length) * 100);
     let content = document.getElementById('card-content');
-    
-    
-    if (currentQuestion < questions.length) {
-    content.innerHTML = ``;
-    content.innerHTML += `
+     
+    if (gameIsOver()) {
+        content.innerHTML = ``;
+        content.innerHTML += getQuestionHTML(showQuestionNumber, allQuestions, question, progressPercent);
+    } else {
+        content.innerHTML = ``;
+        content.innerHTML += getEndscreenHTML(correctAnswerCount, allQuestions, progressPercent);
+    }
+    updateProgressBar(progressPercent);
+}
+
+
+function gameIsOver() {
+    return currentQuestion < questions.length
+}
+
+
+function getQuestionHTML(showQuestionNumber, allQuestions, question, progressPercent) {
+    return `
         <h5>Frage ${showQuestionNumber} von ${allQuestions}</h5>
         <h1 class="card-title">${question['question']}</h1>
         <div class="button-area">
@@ -49,52 +73,71 @@ function renderQuestion() {
         <button id="id3" type="button" onclick="answer('answer3', 'id3')" class="btn btn-primary btn-lg">${question['answer3']}</button>
         <button id="id4" type="button" onclick="answer('answer4', 'id4')" class="btn btn-primary btn-lg">${question['answer4']}</button>
         </div>
-        <div class="progress-bar">
-            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${progressPercent}%</div>
         </div>
     `
-    } else {
-        content.innerHTML = ``;
-        content.innerHTML += `
+}
+
+
+function getEndscreenHTML(correctAnswerCount, allQuestions, progressPercent) {
+    return `
         <h5>Herzlichen Glückwunsch!</h5>
         <h1 class="card-title">Quiz beendet!</h1>
         <h2>Du hast ${correctAnswerCount} von ${allQuestions} Fragen richtig beantwortet.</h2>
         <button id="" type="button" onclick="playAgain()" class="btn btn-primary btn-lg">Nochmal spielen</button>
-        <div class="progress-bar">
-            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${progressPercent}%</div>
         </div>
     `
-    }
-    updateProgressBar(progressPercent);
 }
 
+
 function updateProgressBar(progressPercent) {
-    let progressBarFill = document.getElementById('progress-bar-fill');
-    progressBarFill.style.width = progressPercent + '%';
+    let progressBarMain = document.getElementById('progress-bar');
+    progressBarMain.style.width = progressPercent + '%';
 }
+
 
 function answer(selection, id) {
     let question = questions[currentQuestion];
     let selectedQuestionNumber = selection.slice(-1);
-    
-
     let idOfRightAnswer = `id${question['right_answer']}`;
 
-    if (selectedQuestionNumber == question['right_answer']) {
-        document.getElementById(id).classList.add('bg-success'); 
-        document.getElementById(id).classList.add('pulse');
-        correctAnswerCount++;       
+    if (answerIsRight(selectedQuestionNumber, question)) {
+        showSuccess(id);      
     } else {
-        document.getElementById(id).classList.add('bg-danger');
-        document.getElementById(id).classList.add('pulse');
-        document.getElementById(idOfRightAnswer).classList.add('bg-success');
-        document.getElementById(idOfRightAnswer).classList.add('pulse');
-
+        showFalse(id, idOfRightAnswer)
     }
+    
     currentQuestion++;
     setTimeout(renderQuestion, 2000);
-    
 }
+
+
+function answerIsRight(selectedQuestionNumber, question) {
+    return selectedQuestionNumber == question['right_answer'];
+}
+
+
+function showSuccess(id) {
+    document.getElementById(id).classList.add('bg-success'); 
+    document.getElementById(id).classList.add('pulse');
+    AUDIO_SUCCESS.play();
+    correctAnswerCount++; 
+}
+
+
+function showFalse(id, idOfRightAnswer) {
+    document.getElementById(id).classList.add('bg-danger');
+    document.getElementById(id).classList.add('pulse');
+    document.getElementById(idOfRightAnswer).classList.add('bg-success');
+    document.getElementById(idOfRightAnswer).classList.add('pulse');
+    AUDIO_FAIL.play();
+}
+
 
 function playAgain() {
     currentQuestion = 0;

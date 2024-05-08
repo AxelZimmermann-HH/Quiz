@@ -63,6 +63,8 @@ h5 {
     border: none !important;
 }
 
+
+
 .pulse {
     animation: pulse 2s ease-out;
   }
@@ -82,7 +84,7 @@ h5 {
     }
   }
 
-  .progress-bar {
+  .progress-bar2 {
     width: 100%;
     background-color: #f3f3f3;
     border: 1px solid #ccc;
@@ -99,6 +101,10 @@ h5 {
     width: 0%;
     transition: width 2s ease;
     border-radius: 5px 0 0 5px;
+}
+
+.progress {
+    width: 100%;
 }
 
 @media(max-width: 1200px) {
