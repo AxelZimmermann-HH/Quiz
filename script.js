@@ -36,8 +36,8 @@ let questions = [
 
 let currentQuestion = 0;
 let correctAnswerCount = 0;
-let AUDIO_SUCCESS = new Audio('/sounds/correct.wav');
-let AUDIO_FAIL = new Audio('/sounds/false.wav');
+let AUDIO_SUCCESS = new Audio('./sounds/correct.wav');
+let AUDIO_FAIL = new Audio('./sounds/false.wav');
 
 
 function renderQuestion() {
